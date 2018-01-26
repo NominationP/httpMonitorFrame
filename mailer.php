@@ -1,12 +1,11 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
-require 'vendor/autoload.php';
+require 'PHPMailer/vendor/autoload.php';
 require_once 'common.php';
 
 
 
 function qq_send_qq($info_arr){
-
 
 	$FromName = $info_arr['FromName'];
 	$Username = $info_arr['Username'];

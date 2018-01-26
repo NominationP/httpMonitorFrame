@@ -1,23 +1,17 @@
 <?php
 
-$CONFIG_HTTP_MONITOR = serialize([
+
+$config_http_monitor = serialize([
 
 	[
-		"cluster_name"=>"",
+		"cluster_name"=>"crontab_log",
 		"url"=>"",
 		"get_data"=>"",
 		"post_data"=>"",
 		"cookie_data"=>"",
-		"result"=>"",
+		"result"=>"OK", 
 	],
 
-
-	[
-		"cluster_name"=>"",
-		"url"=>"",
-		"get_data"=>"",
-		"post_data"=>"",
-		"cookie_data"=>"",
-		"result"=>"",
-	],
 ]); 
+
+define("CONFIG_HTTP_MONITOR",$config_http_monitor);

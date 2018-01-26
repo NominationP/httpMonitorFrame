@@ -1,13 +1,16 @@
 <?php
-require_once "config_monitor_item.php";
-require_once "config_cluster_info.php";
-require_once "config_owner_info.php";
-require_once "mailer.php";
+
+
+include_once ("config_monitor_info.php");
+include_once ("config_cluster_info.php");
+include_once ("config_owner_info.php");
+include_once ("mailer.php");
 
 
 $config_monitor_item = unserialize(CONFIG_HTTP_MONITOR);
 $config_cluster_info = unserialize(CONFIG_CLUSTER_INFO);
 $config_owner_info = unserialize(CONFIG_OWNER_INFO);
+
 
 // 遍历所有监控项
 foreach ($config_monitor_item as $key => $value) {
@@ -15,7 +18,7 @@ foreach ($config_monitor_item as $key => $value) {
 
 	// 取出监控项的集群名，URL，http数据，结果等信息
 	
-	$cluster_name = $key;
+	$cluster_name = $value['cluster_name'];
 	$url = $value['url'];
 	$get_data = $value['get_data'];
 	$post_data = $value['post_data'];
@@ -25,9 +28,10 @@ foreach ($config_monitor_item as $key => $value) {
 	// 由集群名，获取集群信息
 	 $cluster_info= $config_cluster_info[$cluster_name];
 
+
 	 // 由集群信息，获取集群ip列表，集群负责人列表
-	 $ips = $cluster_info['ip'];
-	 $owners = $cluster_info['owner'];
+	 $ips = $cluster_info['ip_list'];
+	 $owners = $cluster_info['owner_list'];
 
 
 	 // 集群内的每一个ip实例web-server，都需要监控
@@ -47,20 +51,22 @@ foreach ($config_monitor_item as $key => $value) {
 	 	// 否则，对所有集群负责人发送告警
 	 	foreach ($owners as $key => $owner_each) {
 
-	 		$phone = $owner_each['phone'];
-	 		$email = $owner_each['email'];
+	 		$phone = $config_owner_info[$owner_each]['phone'];
+	 		$email = $config_owner_info[$owner_each]['email'];
 
-	 		$info_arr = '{
-				  "FromName": "Yibo",
-				  "Username": "605166577@qq.com",
-				  "Password": "",
-				  "From": "605166577@qq.com",
-				  "AddAddress_arr": ['.
-				    $email
-				  .'],
-				  "Subject": "Work Error !",
-				  "Body": '.$ip.",".$url.'
-				}';
+
+			$info_arr = [
+			            "Username" => "605166577@qq.com",
+			            "AddAddress_arr" => [
+			                $email
+			            ],
+			            "FromName" => "Yibo",
+			            "Password" => "",
+			            "Body" => $ip_each.",".$url,
+			            "From" => "605166577@qq.com",
+			            "Subject" => "Work Error !"
+			        ];
+			
 	 		qq_send_qq($info_arr);
 
 

@@ -1,18 +1,17 @@
 <?php
 
-$CONFIG_OWNER_INFO = serialize([
 
-	"user_name"=>
+$config_owner_info = serialize([
+
+	"yibo"=>
 					[
-						"email"=>[],
-						"phone"=>[],
+						"email"=>"605166577@qq.com",
+						"phone"=>"",
 					],
 
-
-	"user_name"=>
-					[
-						"email"=>[],
-						"phone"=>[],
-					],
 
 ]); 
+
+define("CONFIG_OWNER_INFO",$config_owner_info);
+
+

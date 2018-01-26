@@ -1,19 +1,17 @@
 <?php
 
-$CONFIG_CLUSTER_INFO = serialize([
 
-	"cluster_name"=>
+
+$config_cluster_info = serialize([
+
+	"crontab_log"=>
 					[
 						"ip_list"=>[],
-						"port"=>"",
-						"owner_list"=>[],
+						"port"=>"80",
+						"owner_list"=>["yibo"],
 					],
 
 
-	"cluster_name"=>
-					[
-						"ip_list"=>[],
-						"port"=>"",
-						"owner_list"=>[],
-					],
 ]); 
+
+define("CONFIG_CLUSTER_INFO",$config_cluster_info);
